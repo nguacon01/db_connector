@@ -3,7 +3,6 @@ from .base_model import Model
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-
 class db_connector(object):
     def __init__(self, config_file_path):
         self.config_file_path = config_file_path

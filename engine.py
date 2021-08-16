@@ -17,7 +17,7 @@ class Engine:
         """
         self.engine = create_engine(
                     f"mysql+pymysql://{self.config['MYSQL_USER']}:{self.config['MYSQL_PASSWORD']}@{self.config['MYSQL_HOST']}:{self.config['MYSQL_PORT']}/{self.config['MYSQL_DATABASE']}",
-                    echo=True
+                    # echo=True
                 )
 
     def __repr__(self):
