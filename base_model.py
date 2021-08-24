@@ -28,6 +28,10 @@ class Model(object):
         print(columns)
         return cls(*columns)
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__} object: ID = {self.id}, created at: {self.created_at}"
+    __str__ = __repr__
+
     # @classmethod
     # def all(cls):
     #     objects = db.session.query(cls).all()
