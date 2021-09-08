@@ -19,3 +19,4 @@ class NameOfYourTable(db.Model, db.Base):
 
 db.create_all()
 ```
+<p>All the tables created by db_connector will have automatically id(Integer), create_at(Datetime) and update_at(Datetime) columns.</p>
