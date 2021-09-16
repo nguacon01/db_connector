@@ -31,14 +31,3 @@ class Model(object):
     def __repr__(self) -> str:
         return f"{self.__class__.__name__} object: ID = {self.id}, created at: {self.created_at}"
     __str__ = __repr__
-
-    # @classmethod
-    # def all(cls):
-    #     objects = db.session.query(cls).all()
-    #     return objects
-    # @classmethod
-    # def first(cls):
-    #     return db.session.query(cls).first()
-    # @classmethod
-    # def filter_by(cls, **kw):
-    #     return db.session.query(cls).filter_by(**kw)

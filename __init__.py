@@ -12,6 +12,7 @@ class db_connector(object):
         self.config_file_path = config_file_path
         self.Model = Model
         self.Base = declarative_base()
+        self.session()
 
     @property
     def config(self):
@@ -23,9 +24,10 @@ class db_connector(object):
     def engine(self):
         return Engine(self.config).engine
 
-    @property
+    # @property
     def session(self):
-        return sessionmaker(bind=self.engine)
+        Session = sessionmaker(bind=self.engine)
+        self.session = Session()
     
     @property
     def inspector(self):
@@ -33,8 +35,8 @@ class db_connector(object):
     
     def create_all(self):
         return self.Base.metadata.create_all(self.engine)
-    # def drop_all(self):
-    #     return self.Base.metadata.drop_all(self.engine)
+    def drop_all(self):
+        return self.Base.metadata.drop_all(self.engine)
 
     def __repr__(self):
         return f"{self.config_file_path}"
