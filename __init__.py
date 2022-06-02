@@ -5,9 +5,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import inspect
 
 class db_connector(object):
-    def __init__(self, config_file_path):
+    def __init__(self, config_file_path, show_query=False):
+        self.show_query = show_query
         self.config_file_path = config_file_path
-        self.engine = Engine(self.config_file_path).engine
+        self.engine = Engine(config_file_path=self.config_file_path,echo=self.show_query).engine
         self.Model = Model
         self.Base = declarative_base()
         __Session = sessionmaker(bind=self.engine)
