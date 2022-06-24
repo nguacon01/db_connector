@@ -9,19 +9,39 @@ class Engine:
         @param echo (bool) : expose sql query
         @param env (str) : 'DEV' or 'PROD' which are config types in config file
     """
+<<<<<<< HEAD
     engine = ''
     def __init__(self, config_file_path, echo=False, env='DEV'):
         self.config = Config(config_file_path, env=env).ConfMap
         self.echo = echo
         self.__engine_db()
+=======
+    def __init__(self, config:dict):
+        self.config = config
+>>>>>>> 9165280b192328e8aa8b137ded93b6c8c1c82998
 
-    def __engine_db(self):
+    @property
+    def engine(self):
         """
             create engine, connect to the database
         """
+<<<<<<< HEAD
         self.engine = create_engine(
                     f"{self.config['SQL_TYPE_DB']}://{self.config['SQL_USER']}:{self.config['SQL_PASSWORD']}@{self.config['SQL_HOST']}:{self.config['SQL_PORT']}/{self.config['SQL_DATABASE']}",
                     echo=self.echo
+=======
+        # by defautl, if there is no type of your db, it will be mysql
+        db_type = self.config.get('SQL_TYPE_DB', 'mysql').lower()
+
+        db_list = {
+            'mysql':'mysql+pymysql',
+            'postgres':'postgresql'
+        }
+
+        return create_engine(
+                    f"{db_list[db_type]}://{self.config['SQL_USER']}:{self.config['SQL_PASSWORD']}@{self.config['SQL_HOST']}:{self.config['SQL_PORT']}/{self.config['SQL_DATABASE']}",
+                    # echo=True
+>>>>>>> 9165280b192328e8aa8b137ded93b6c8c1c82998
                 )
 
     def __repr__(self):

@@ -1,9 +1,14 @@
-from .engine import Engine
-from .base_model import Model
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import inspect
 import os
+<<<<<<< HEAD
+=======
+
+from .engine import Engine
+from .base_model import Model
+from .configuration import Config
+>>>>>>> 9165280b192328e8aa8b137ded93b6c8c1c82998
 
 class db_connector(object):
 
@@ -12,6 +17,7 @@ class db_connector(object):
         self.env_variable_value = env_variable_value
         self.show_query = show_query
         self.config_file_path = config_file_path
+<<<<<<< HEAD
         self.engine = Engine(config_file_path=self.config_file_path,echo=self.show_query, env=self.get_env()).engine
         self.Model = Model
         self.Base = declarative_base()
@@ -25,9 +31,35 @@ class db_connector(object):
         if os.environ.get(self.env_variable_key, 'DEV') == self.env_variable_value:
             return 'PROD'
         return 'DEV'
+=======
+        self.Model = Model
+        self.Base = declarative_base()
+        self.session()
+
+    @property
+    def config(self):
+        if not os.path.isfile(self.config_file_path):
+            raise IOError('Config file not accessible')
+        return Config(self.config_file_path).ConfMap
+
+    @property
+    def engine(self):
+        return Engine(self.config).engine
+
+    # @property
+    def session(self):
+        Session = sessionmaker(bind=self.engine)
+        self.session = Session()
+    
+    @property
+    def inspector(self):
+        return inspect(self.engine)
+>>>>>>> 9165280b192328e8aa8b137ded93b6c8c1c82998
     
     def create_all(self):
         return self.Base.metadata.create_all(self.engine)
+    def drop_all(self):
+        return self.Base.metadata.drop_all(self.engine)
 
     def __repr__(self):
         return f"{self.config_file_path}"

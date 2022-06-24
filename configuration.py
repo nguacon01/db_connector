@@ -2,30 +2,29 @@ import configparser
 import os
 
 class Config(object):
-    ConfMap = {}
-    def __init__(self, config_file_path, env='DEV'):
-        self.config = configparser.ConfigParser()
+    def __init__(self, config_file_path):
         self.config_file_path = config_file_path
+    
+    @property
+    def config(self):
+        config = configparser.ConfigParser()
         # prevent configparser convert all config keys to lower key
-        self.config.optionxform = str
-        self.config.read(config_file_path)
-        self.env = env
-        self.__ConfigMapper()
+        config.optionxform = str
+        config.read(self.config_file_path)
+        return config
 
-    def __ConfigMapper(self):
+    @property
+    def ConfMap(self):
+        config_mapper = {}
         for section in self.config.sections():
             section_dict = {}
             for key, val in self.config.items(section):
                 section_dict[key] = val
-                self.ConfMap[str(section)] = section_dict
-        
-        if self.env is None:
-            self.ConfMap = self.ConfMap['DEV']
+                config_mapper[str(section)] = section_dict
 
-        if self.env.lower() == 'prod':
-            self.ConfMap = self.ConfMap['PROD']
-        else:
-            self.ConfMap = self.ConfMap['DEV']
+        if 'ENV' in os.environ and os.environ['ENV'].lower() == 'production':
+            return config_mapper['PROD']
+        return config_mapper['DEV']
 
     def getValue(self, key):
         value = ''

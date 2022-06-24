@@ -37,6 +37,7 @@ records = db.session.query(TableName).all()
 records = db.session.query(TableName).filter_by(columnName=value).all()
 ```
 
+<<<<<<< HEAD
 
 ### join 2 tables
 ```python
@@ -46,3 +47,6 @@ record = db.session.query(DarvaDoc.url).join(DarvaScrapper, DarvaScrapper.ref_si
 
 <p>All the tables created by db_connector will have automatically id(Integer), create_at(Datetime) and update_at(Datetime) columns.</p>
 
+=======
+<p>All the tables created by db_connector will have automatically id(Integer), create_at(Datetime) and update_at(Datetime) columns.</p>
+>>>>>>> 9165280b192328e8aa8b137ded93b6c8c1c82998
