@@ -3,17 +3,28 @@ from .base_model import Model
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import inspect
+import os
 
 class db_connector(object):
-    def __init__(self, config_file_path, show_query=False):
+
+    def __init__(self, config_file_path, show_query=False, env_variable_key='ENV', env_variable_value='production'):
+        self.env_variable_key = env_variable_key
+        self.env_variable_value = env_variable_value
         self.show_query = show_query
         self.config_file_path = config_file_path
-        self.engine = Engine(config_file_path=self.config_file_path, echo=self.show_query).engine
+        self.engine = Engine(config_file_path=self.config_file_path,echo=self.show_query, env=self.get_env()).engine
         self.Model = Model
         self.Base = declarative_base()
         __Session = sessionmaker(bind=self.engine)
         self.session = __Session()
         self.inspector = inspect(self.engine)
+
+    def get_env(self):
+        if not self.env_variable_key or not self.env_variable_value:
+            return 'DEV'
+        if os.environ.get(self.env_variable_key, 'DEV') == self.env_variable_value:
+            return 'PROD'
+        return 'DEV'
     
     def create_all(self):
         return self.Base.metadata.create_all(self.engine)
