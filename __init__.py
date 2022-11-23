@@ -14,7 +14,7 @@ class db_connector(object):
         self.engine = Engine(config_file_path=self.config_file_path,echo=self.show_query, env=self.get_env()).engine
         self.Model = Model
         self.Base = declarative_base()
-        __Session = sessionmaker(bind=self.engine)
+        __Session = sessionmaker(bind=self.engine, autoflush=False)
         self.session = __Session()
         self.inspector = inspect(self.engine)
 

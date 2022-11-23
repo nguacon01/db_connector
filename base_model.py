@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, DateTime, func
 from sqlalchemy.ext.declarative import declared_attr
+from sqlalchemy import func
 # from . import db
 
 class Model(object):
@@ -11,7 +12,7 @@ class Model(object):
 
     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
     def to_dict(self):
         """
