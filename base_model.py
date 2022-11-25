@@ -11,8 +11,8 @@ class Model(object):
         return cls.__name__.lower()
 
     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
+    create_date = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    update_date = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
     def to_dict(self):
         """
@@ -30,7 +30,7 @@ class Model(object):
         return cls(*columns)
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__} object: ID = {self.id}, created at: {self.created_at}"
+        return f"{self.__class__.__name__} object: ID = {self.id}, created at: {self.create_date}"
     __str__ = __repr__
 
     # @classmethod
