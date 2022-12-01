@@ -25,9 +25,9 @@ class Model(object):
         """
             return model object from a dictionary
         """
-        columns = (dict.get(col, None) for col in dict.keys())
-        print(columns)
-        return cls(*columns)
+        # columns = (dict.get(col, None) for col in dict.keys())
+        # print(columns)
+        return cls(**dict)
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__} object: ID = {self.id}, created at: {self.create_date}"
