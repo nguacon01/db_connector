@@ -5,6 +5,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import inspect
 import os
 
+__version__ = 1
+
 class db_connector(object):
     def __init__(self, config_file_path, show_query=False, env_variable_key='ENV', env_variable_value='production'):
         self.env_variable_key = env_variable_key
